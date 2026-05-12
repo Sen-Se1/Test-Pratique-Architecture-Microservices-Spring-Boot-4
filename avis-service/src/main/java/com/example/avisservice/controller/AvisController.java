@@ -1,30 +1,26 @@
 package com.example.avisservice.controller;
 
-import com.example.produitsservice.entity.Categorie;
-import com.example.produitsservice.repository.CategorieRepository;
+import com.example.avisservice.entity.Avis;
+import com.example.avisservice.service.AvisService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/avis")
 @RequiredArgsConstructor
-public class CategorieController {
+public class AvisController {
 
-    private final CategorieRepository categorieRepository;
+    private final AvisService avisService;
 
-    @GetMapping
-    public List<Categorie> getCategories() {
-        return categorieRepository.findAll();
+    @GetMapping("/{produitId}")
+    public List<Avis> getAvis(@PathVariable Long produitId) {
+        return avisService.findByProduitId(produitId);
     }
 
-    @GetMapping("/{id}")
-    public Categorie getCategorie(@PathVariable Long id) {
-        return categorieRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Catégorie introuvable"));
+    @PostMapping
+    public Avis createAvis(@RequestBody Avis avis) {
+        return avisService.save(avis);
     }
 }

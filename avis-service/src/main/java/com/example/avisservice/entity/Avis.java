@@ -12,10 +12,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categorie {
+public class Avis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nom;
+    private Long produitId;
+    private String auteur;
+    private String commentaire;
+    private int note;
 }

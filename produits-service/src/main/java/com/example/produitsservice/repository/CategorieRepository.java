@@ -1,4 +1,7 @@
-package com.example.produitsservice.reposetory;
+package com.example.produitsservice.repository;
 
-public interface CategorieReposetory {
+import com.example.produitsservice.entity.Categorie;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategorieRepository extends JpaRepository<Categorie, Long> {
 }
