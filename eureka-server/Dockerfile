@@ -1,12 +1,15 @@
-FROM eclipse-temurin:25-jdk-alpine AS build
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
 WORKDIR /app
-COPY . .
-RUN ./mvnw clean package -DskipTests
 
+COPY pom.xml .
+COPY src ./src
 
-FROM eclipse-temurin:25-jre-alpine
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+COPY --from=builder /app/target/*.jar app.jar
 
 EXPOSE 8761
 
