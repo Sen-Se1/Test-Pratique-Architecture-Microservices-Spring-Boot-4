@@ -3,7 +3,6 @@ import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet } from "reac
 import axios from "axios";
 
 const API = "http://localhost:8090"; 
-// Example: http://192.168.1.10:8090
 
 export default function App() {
   const [categories, setCategories] = useState([]);
