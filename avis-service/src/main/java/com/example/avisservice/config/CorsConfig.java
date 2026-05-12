@@ -1,4 +1,4 @@
-package com.example.produitsservice.config;
+package com.example.avisservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

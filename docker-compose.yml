@@ -16,10 +16,17 @@ services:
       - "6379:6379"
 
   eureka-server:
-    build: ./eureka-server
+    build:
+      context: ./eureka-server
     container_name: eureka-server
     ports:
       - "8761:8761"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   produits-service:
     build: ./produits-service
@@ -41,11 +48,15 @@ services:
       - eureka-server
 
   api-gateway:
-    build: ./api-gateway
+    build:
+      context: ./api-gateway
     container_name: api-gateway
     ports:
       - "8090:8090"
     depends_on:
-      - eureka-server
-      - produits-service
-      - avis-service
+      eureka-server:
+        condition: service_healthy
+      produits-service:
+        condition: service_started
+      avis-service:
+        condition: service_started
