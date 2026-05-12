@@ -16,17 +16,16 @@ services:
       - "6379:6379"
 
   eureka-server:
-    build:
-      context: ./eureka-server
+    build: ./eureka-server
     container_name: eureka-server
     ports:
       - "8761:8761"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:8761/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 5
-      start_period: 30s
+      retries: 10
+      start_period: 40s
 
   produits-service:
     build: ./produits-service
