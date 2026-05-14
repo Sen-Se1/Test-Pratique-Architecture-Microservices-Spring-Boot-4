@@ -28,10 +28,24 @@ services:
       start_period: 40s
 
   produits-service:
-    build: ./produits-service
+    build:
+      context: ./produits-service
+      dockerfile: Dockerfile
     container_name: produits-service
     ports:
       - "8091:8091"
+    depends_on:
+      - postgres
+      - redis
+      - eureka-server
+
+  produits-service-test:
+    build: 
+      context: ./produits-service
+      dockerfile: Dockerfile test
+    container_name: produits-service-test
+    ports:
+      - "8093:8091"
     depends_on:
       - postgres
       - redis
